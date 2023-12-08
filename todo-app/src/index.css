@@ -1,0 +1,9 @@
+*{
+  padding:0;
+  margin:0;
+}
+.form-container{
+  display:flex;
+  justify-content: center;
+  padding-top:2rem;
+}
