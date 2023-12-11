@@ -1,23 +1,38 @@
 import AddtoCartIcon from "../../../assets/icons/add_cart.svg"
 import Modal from "../../UI/Modal.js"
 import {Fragment, useState} from "react"
-
+import{useSelector,useDispatch} from "react-redux"
 
 // pass updateItemTitle
-const ListItem=({data,addItem,removeItem})=>{
+const ListItem=({data})=>{
 
 // const[counter,setCounter]=useState(0)
 const[showModal,setModal]=useState(false)
+const item=useSelector(state=>state.items.find((item)=>item.id===data.id))
+// we get the curren state of a particular item from the store
+const dispatch=useDispatch()
 
 const increaseCounter=(e)=>{
     e.stopPropagation()  //here we dont want the event to buble upto modal div
-    addItem(data.id)
-    // setCounter(counter+1)
+    // addItem(data.id)
+    // // setCounter(counter+1)
+    dispatch({
+        type:"ADD_ITEM",
+        payload:{
+            item:data
+        }
+    }
+    )
 }
 const decreaseCounter=(e)=>{
     e.stopPropagation()   //same as above
-    removeItem(data.id)
     
+    dispatch({
+        type:"REMOVE_ITEM",
+        payload:{
+            id:data.id
+        }
+    })
     // if(counter===1)
     //      removeItem(data.id)
         // this ensure that the item is removed only after all its copies are delted
@@ -47,14 +62,14 @@ const handleModal=()=>{
             <small className={"cart-message"}></small>
 
             {
-               data.quantity<1?  <button className={"cart-add"} onClick={increaseCounter}>
+              !item || item?.quantity<1?  <button className={"cart-add"} onClick={increaseCounter}>
                <span>Add to Cart</span>
                <img src={AddtoCartIcon} alt="cart-icon"></img>
            </button> :
 
               <div className={"cart-addon"}>
               <button onClick={decreaseCounter}><span>-</span></button>
-              <span className="counter">{data.quantity}</span>
+              <span className="counter">{item.quantity}</span>
               <button onClick={increaseCounter}><span>+</span></button>
               </div>
 
@@ -75,14 +90,14 @@ const handleModal=()=>{
                 </div>
                 <p>{data.description}</p>
                 {
-               data.quantity<1?  <button className={"cart-add card-add__modal"} onClick={increaseCounter}>
+               !item || item?.quantity<1?  <button className={"cart-add card-add__modal"} onClick={increaseCounter}>
                <span>Add to Cart</span>
                <img src={AddtoCartIcon} alt="cart-icon"></img>
            </button> :
 
               <div className={"cart-addon card-addon__modal"}>
               <button onClick={decreaseCounter}><span>-</span></button>
-              <span className="counter">{data.quantity}</span>
+              <span className="counter">{item.quantity}</span>
               <button onClick={increaseCounter}><span>+</span></button>
               </div>
 

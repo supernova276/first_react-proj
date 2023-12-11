@@ -33,7 +33,6 @@ useEffect(()=>{  //never make the callback func as async we can make the inner f
     const transformedData=data.map((item,index)=>{
       return{
         ...item,
-        quantity:0,
         id:index
       }
     })
@@ -72,8 +71,6 @@ useEffect(()=>{
     }
   }
 },[eventState])
-
-
 
 const handleAddItem=(id)=>{
   // if(presentItems.indexOf(id)>-1)return;

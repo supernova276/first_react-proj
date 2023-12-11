@@ -1,7 +1,7 @@
 import Cart from "../../Cart/index.js"
-const header = ({count,items,onHandleEvent}) => {
+const header = ({items,totalAmount,onHandleEvent}) => {
+     
     return (
-
         <header>
             <div className="nav-brand">
                 <a to="/">
@@ -20,7 +20,7 @@ const header = ({count,items,onHandleEvent}) => {
             <div className="searchBox-container">
                 <form>
                     <input name="search" type="text"
-                        id="search" placeholder="Enter product name, category" />
+                        id="search" placeholder="Enter product name, category"/>
                     <button type="submit">
                         <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-search" width="20"
                             height="20" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" fill="none"
@@ -40,7 +40,7 @@ const header = ({count,items,onHandleEvent}) => {
                 </svg>
             </div>
             <div className="cart-container">
-              <Cart count={count} items={items} onHandleEvent={onHandleEvent}></Cart>
+              <Cart items={items} totalAmount={totalAmount} onHandleEvent={onHandleEvent}></Cart>
             </div>
         </header>
     )
