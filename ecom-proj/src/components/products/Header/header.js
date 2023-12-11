@@ -1,5 +1,5 @@
 import Cart from "../../Cart/index.js"
-const header = ({items,totalAmount,onHandleEvent}) => {
+const header = () => {
      
     return (
         <header>
@@ -40,7 +40,7 @@ const header = ({items,totalAmount,onHandleEvent}) => {
                 </svg>
             </div>
             <div className="cart-container">
-              <Cart items={items} totalAmount={totalAmount} onHandleEvent={onHandleEvent}></Cart>
+              <Cart></Cart>
             </div>
         </header>
     )

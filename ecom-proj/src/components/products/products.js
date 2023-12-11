@@ -5,7 +5,7 @@ import axios from "axios"
 import Form from "./Form.js"
 
 
-const Products=({addItem, removeItem,eventState})=>{
+const Products=()=>{
   const[items,setItem]=useState([])
 
   const[loader,setloader]=useState(true)
@@ -61,42 +61,6 @@ catch(error){
   fun();
 },[])
 
-useEffect(()=>{
-  if(eventState.id>-1){
-    if(eventState.type===1){
-      handleAddItem(eventState.id);
-    }
-    else if(eventState.type===-1){
-      handleRemoveItem(eventState.id);
-    }
-  }
-},[eventState])
-
-const handleAddItem=(id)=>{
-  // if(presentItems.indexOf(id)>-1)return;
-  // setPresentItems([...presentItems,id])
-  let data=[...items]
-  let index=data.findIndex(i=>i.id===id)
-  data[index].quantity+=1;
-  setItem([...data])
-  addItem(data[index]) //passing data from child to the parent
-}
-const handleRemoveItem=(id)=>{
-  // let index=presentItems.indexOf(id);
-  // if(index>-1){
-  //   setPresentItems([...presentItems.splice(index,1)]) 
-  //   removeItem()
-  // }
-  let data=[...items]
-  let index=data.findIndex(i=>i.id===id)
-  if(data[index].quantity!==0){
-      
-    data[index].quantity-=1; 
-  setItem([...data])
-  removeItem(data[index])
-  }
-}
-
 //////////////////////////////////////////////////updating title/////////////////////////////////////////////////////
 // const updateItemTitle =async (itemId)=>{
 //   console.log(itemId)
@@ -127,7 +91,7 @@ return(
       {
         items.map((item)=>{
           // updateItemTitle={updateItemTitle}
-          return (<ListItem data={item} key={item.id} addItem={handleAddItem} removeItem={handleRemoveItem}></ListItem>)
+          return (<ListItem data={item} key={item.id}></ListItem>)
         })
       }
       {/* {[<ListItem data={items[0]}></ListItem>,<ListItem data={items[1]}></ListItem>,

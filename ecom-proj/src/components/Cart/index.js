@@ -2,11 +2,18 @@ import { Fragment, useState } from "react"
 import Modal from "../UI/Modal.js"
 import CartItem from "./CartItem.js"
 import OrderModal from "../UI/OrderModal.js"
+import { useSelector,useDispatch} from "react-redux"
+import { addItemHandler, clearCartHandler, removeItemHandler } from "../../actions/index.js"
 
-  const Cart=({items,totalAmount,onHandleEvent})=>{
+  const Cart=()=>{
 
     const [showModal,setShowModal]=useState(false);
     const[orderModal,setOrderModal]=useState(false);
+
+  const items=useSelector(state=>state.items)
+  const totalAmount=useSelector(state=>state.totalAmount)
+  const dispatch=useDispatch()
+
     console.log(totalAmount)
 
     const handleClick=()=>{
@@ -15,6 +22,15 @@ import OrderModal from "../UI/OrderModal.js"
     const handleOrderModal=()=>{
         setShowModal(false)
         setOrderModal(previousState =>!previousState)
+        dispatch(clearCartHandler())
+    }
+    const handleDispatchItem=(type,item)=>{
+          if(type===1){
+            dispatch(addItemHandler(item))
+          }
+          else if(type===-1){
+            dispatch(removeItemHandler(item.id))
+          }
     }
      return(
             <>
@@ -39,8 +55,8 @@ import OrderModal from "../UI/OrderModal.js"
                                     items.length>0 ?
                                items.map(item => {
                                return( <CartItem data={item} 
-                                onEmitIncreaseItem={(id)=>{ onHandleEvent(id,1)}}
-                                onEmitDecreaseItem={(id)=>{onHandleEvent(id,-1)}} 
+                                onEmitIncreaseItem={(item)=>{ handleDispatchItem(1,item)}}
+                                onEmitDecreaseItem={(item)=>{handleDispatchItem(-1,item)}} 
                                 key={item.id}></CartItem>)
                                }):
                                <div className="empty-cart">Please Add Something</div>

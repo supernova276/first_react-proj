@@ -2,6 +2,7 @@ import AddtoCartIcon from "../../../assets/icons/add_cart.svg"
 import Modal from "../../UI/Modal.js"
 import {Fragment, useState} from "react"
 import{useSelector,useDispatch} from "react-redux"
+import { addItemHandler,removeItemHandler } from "../../../actions/index.js"
 
 // pass updateItemTitle
 const ListItem=({data})=>{
@@ -16,23 +17,12 @@ const increaseCounter=(e)=>{
     e.stopPropagation()  //here we dont want the event to buble upto modal div
     // addItem(data.id)
     // // setCounter(counter+1)
-    dispatch({
-        type:"ADD_ITEM",
-        payload:{
-            item:data
-        }
-    }
-    )
+    dispatch(addItemHandler(data))
 }
 const decreaseCounter=(e)=>{
     e.stopPropagation()   //same as above
     
-    dispatch({
-        type:"REMOVE_ITEM",
-        payload:{
-            id:data.id
-        }
-    })
+    dispatch(removeItemHandler(data.id))
     // if(counter===1)
     //      removeItem(data.id)
         // this ensure that the item is removed only after all its copies are delted
