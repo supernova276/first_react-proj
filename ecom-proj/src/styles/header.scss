@@ -1,6 +1,4 @@
 $header-background-color: rgba(28, 34, 36, 0.8);
-// $header-background-color: rgba(28, 34, 36, 0.75);
-// $header-background-color: rgba(98, 101, 102, 0.99);
 
 header {
     margin: 0;
@@ -143,5 +141,18 @@ header {
             margin-left: auto;
             display: block;
         }
+    }
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+
+    button {
+        color: $white;
+        background-color: unset;
+        border: unset;
+        margin: 0 10px;
+        cursor: pointer;
     }
 }

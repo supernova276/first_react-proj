@@ -9,7 +9,7 @@ const ListItem=({data})=>{
 
 // const[counter,setCounter]=useState(0)
 const[showModal,setModal]=useState(false)
-const item=useSelector(state=>state.items.find((item)=>item.id===data.id))
+const item=useSelector(state=>state.cart.items.find((item)=>item.id===data.id))
 // we get the curren state of a particular item from the store
 const dispatch=useDispatch()
 

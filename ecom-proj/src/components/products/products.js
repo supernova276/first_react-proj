@@ -3,12 +3,22 @@ import ListItem from "./ListItems/listitem.js"
 import Loader from "../UI/Loader.js"
 import axios from "axios"
 import Form from "./Form.js"
+import {useParams,useNavigate, useLocation} from "react-router-dom"
 
 
 const Products=()=>{
   const[items,setItem]=useState([])
 
   const[loader,setloader]=useState(true)
+  const params=useParams()
+  const history=useNavigate()
+  const {search}=useLocation();
+  const queryParams=new URLSearchParams(search).get("search")
+
+  const handleNotFound=()=>{
+    history("/404")
+  }
+  
   // const [presentItems,setPresentItems]=useState([])
 
   // this item is not being used as we are fetching the data using an api
@@ -28,8 +38,23 @@ useEffect(()=>{  //never make the callback func as async we can make the inner f
 
   async function fun(){
 
+
     try{
-    const {data}= await axios.get("https://testdb-ca8a9-default-rtdb.firebaseio.com/items.json")
+      let slug=`items.json`
+      console.log(params.category)
+      if(params.category){
+         slug=`items-${params.category}.json`
+      }
+      if(queryParams && queryParams!="signup" && queryParams!=="login"){
+        slug+=`?search=${queryParams}`
+      }
+
+    const {data}= await axios.get(`https://testdb-ca8a9-default-rtdb.firebaseio.com/${slug}`)
+    console.log(slug)
+    if(!data) {
+      handleNotFound();
+    return;}
+
     const transformedData=data.map((item,index)=>{
       return{
         ...item,
@@ -59,7 +84,11 @@ catch(error){
 // }).catch(error=>console.log(error))
   }
   fun();
-},[])
+  return ()=>{
+    setItem([])
+    setloader(true)
+  }
+},[params.category,queryParams])
 
 //////////////////////////////////////////////////updating title/////////////////////////////////////////////////////
 // const updateItemTitle =async (itemId)=>{
